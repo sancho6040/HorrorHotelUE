@@ -3,14 +3,10 @@
 #include "GameFramework/Pawn.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "InputActionValue.h"
 #include "NiagaraFunctionLibrary.h"
-#include "NiagaraSystem.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
-
-DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 AMultiPlayerController::AMultiPlayerController()
 {
