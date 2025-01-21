@@ -1,4 +1,4 @@
-#include "MultiplayerGameStateBase/MultiplayerGameStateBase.h"
+#include "HorrorHotel/Public/GameCore/MultiplayerGameStateBase.h"
 #include "Net/UnrealNetwork.h"
 
 AMultiplayerGameStateBase::AMultiplayerGameStateBase()

@@ -1,6 +1,6 @@
-#include "MultiplayerGameModeBase.h"
+#include "HorrorHotel/Public/GameCore/MultiplayerGameModeBase.h"
 
-#include "HorrorHotel/MultiPlayerController/MultiPlayerController.h"
+#include "HorrorHotel/Public/PlayerCharacter/MultiPlayerController.h"
 
 AMultiPlayerGameModeBase::AMultiPlayerGameModeBase()
 {
