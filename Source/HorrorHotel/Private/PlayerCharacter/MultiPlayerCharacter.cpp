@@ -1,55 +1,54 @@
-#include "HorrorHotel/Public/PlayerCharacter/MultiPlayerCharacter.h"
-#include "UObject/ConstructorHelpers.h"
-#include "Camera/CameraComponent.h"
-#include "Components/DecalComponent.h"
+#include "PlayerCharacter/MultiPlayerCharacter.h"
 #include "Components/CapsuleComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/PlayerController.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Materials/Material.h"
-#include "Engine/World.h"
+#include "PlayerCharacter/MultiPlayerController.h"
+#include "Items/KeyItem.h"
 
-// Sets default values
 AMultiPlayerCharacter::AMultiPlayerCharacter()
 {
-	// Set size for player capsule
-	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
+    CollisionComponent = GetCapsuleComponent();
 
-	// Don't rotate character to camera direction
-	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = false;
-	bUseControllerRotationRoll = false;
-
-	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Rotate character to moving direction
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 640.f, 0.f);
-	GetCharacterMovement()->bConstrainToPlane = true;
-	GetCharacterMovement()->bSnapToPlaneAtStart = true;
-
-	// Create a camera boom...
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->SetUsingAbsoluteRotation(true); // Don't want arm to rotate when character does
-	CameraBoom->TargetArmLength = 800.f;
-	CameraBoom->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f));
-	CameraBoom->bDoCollisionTest = false; // Don't want to pull camera in when it collides with level
-
-	// Create a camera...
-	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
-	TopDownCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-	TopDownCameraComponent->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
-	// Activate ticking in order to update the cursor every frame.
-	PrimaryActorTick.bCanEverTick = true;
-	PrimaryActorTick.bStartWithTickEnabled = true;
-
+    // Configure additional components for this character
+    CollisionComponent->InitCapsuleSize(42.f, 96.0f);
+    CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AMultiPlayerCharacter::OnOverlapBegin);
+    CollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AMultiPlayerCharacter::OnOverlapEnd);
 }
 
-// Called every frame
-void AMultiPlayerCharacter::Tick(float DeltaTime)
+void AMultiPlayerCharacter::BeginPlay()
 {
-	Super::Tick(DeltaTime);
-
+    Super::BeginPlay();
 }
 
+void AMultiPlayerCharacter::Tick(float DeltaSeconds)
+{
+    Super::Tick(DeltaSeconds);
+}
 
+void AMultiPlayerCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+    if (OtherActor && OtherActor != this)
+    {
+        if (OtherActor->IsA(AKeyItem::StaticClass()))
+        {
+            AMultiPlayerController* PC = Cast<AMultiPlayerController>(GetController());
+            if (PC)
+            {
+                PC->ShowInteractionWidget(true);
+            }
+        }
+    }
+}
+
+void AMultiPlayerCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+    if (OtherActor && OtherActor != this)
+    {
+        if (OtherActor->IsA(AKeyItem::StaticClass()))
+        {
+            AMultiPlayerController* PC = Cast<AMultiPlayerController>(GetController());
+            if (PC)
+            {
+                PC->ShowInteractionWidget(false);
+            }
+        }
+    }
+}
