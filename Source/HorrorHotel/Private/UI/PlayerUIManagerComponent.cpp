@@ -1,5 +1,6 @@
 #include "UI/PlayerUIManagerComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "GameCore/MultiplayerGameStateBase.h"
 
 UPlayerUIManagerComponent::UPlayerUIManagerComponent()
 {
@@ -9,6 +10,11 @@ UPlayerUIManagerComponent::UPlayerUIManagerComponent()
 void UPlayerUIManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(AMultiplayerGameStateBase* GameState = GetWorld()->GetGameState<AMultiplayerGameStateBase>())
+	{
+		GameState->OnKeyCountChanged.AddDynamic(this, &UPlayerUIManagerComponent::UpdateKeyCountUI);
+	}
 }
 
 void UPlayerUIManagerComponent::InitializeUI(APlayerController* PlayerController)
@@ -31,4 +37,13 @@ void UPlayerUIManagerComponent::ShowInteractionWidget(bool bShow)
 		InteractionWidgetInstance->SetVisibility(bShow ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 	}
 }
+
+void UPlayerUIManagerComponent::UpdateKeyCountUI()
+{
+	if (AMultiplayerGameStateBase* GameState = GetWorld()->GetGameState<AMultiplayerGameStateBase>())
+	{
+		int32 KeyCount = GameState->GetKeyCount();
+	}        
+}
+
 

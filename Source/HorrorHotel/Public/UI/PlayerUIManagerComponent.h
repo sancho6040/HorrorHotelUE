@@ -22,6 +22,8 @@ public:
 	// show/hide the interaction widget
 	void ShowInteractionWidget(bool bShow);
 
+	void UpdateKeyCountUI();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

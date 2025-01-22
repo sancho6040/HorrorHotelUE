@@ -7,7 +7,6 @@
 
 AKeyItem::AKeyItem()
 {
-	// Set default values for this actor's properties if necessary
 	ItemName = TEXT("Key");
 }
 
@@ -15,13 +14,23 @@ void AKeyItem::OnPickedUp()
 {
 	Super::OnPickedUp();
 
-	// Add key logic here
-	AMultiplayerGameStateBase* MyGameState = GetWorld()->GetGameState<AMultiplayerGameStateBase>();
-	if (MyGameState)
-	{
-		MyGameState->Addkey();
-	}
+	Server_OnPickedUp();
+}
 
-	// Destroy the key after it's picked up
+void AKeyItem::Server_OnPickedUp_Implementation()
+{
+	IncrementKeysCount();
 	Destroy();
+}
+
+void AKeyItem::IncrementKeysCount()
+{
+	if (GetWorld())
+	{
+		AMultiplayerGameStateBase* GameState = GetWorld()->GetGameState<AMultiplayerGameStateBase>();
+		if (GameState)
+		{
+			GameState->Addkey();
+		}
+	}
 }

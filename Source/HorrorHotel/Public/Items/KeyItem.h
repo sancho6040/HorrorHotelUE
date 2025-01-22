@@ -14,4 +14,11 @@ public:
 	AKeyItem();
 
 	virtual void OnPickedUp() override;
+
+protected:
+	//Interact RPC
+	UFUNCTION(Server, Reliable)
+	void Server_OnPickedUp();
+
+	void IncrementKeysCount();
 };

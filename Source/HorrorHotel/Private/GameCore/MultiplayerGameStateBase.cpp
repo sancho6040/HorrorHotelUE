@@ -4,6 +4,7 @@
 AMultiplayerGameStateBase::AMultiplayerGameStateBase()
 {
 	KeysCount = 0;
+	MaxKeys = 3;
 }
 
 void AMultiplayerGameStateBase::Addkey()
@@ -22,7 +23,7 @@ int32 AMultiplayerGameStateBase::GetKeyCount() const
 
 void AMultiplayerGameStateBase::OnRep_KeyCount()
 {
-	
+	OnKeyCountChanged.Broadcast();
 }
 
 void AMultiplayerGameStateBase::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const

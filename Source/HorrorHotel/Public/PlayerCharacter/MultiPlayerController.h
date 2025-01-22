@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "HorrorHotel/TP_TopDown/TP_TopDownPlayerController.h"
+#include "Items/PickableItem.h"
 #include "UI/PlayerUIManagerComponent.h"
 #include "MultiPlayerController.generated.h"
 
@@ -23,6 +24,7 @@ public:
 	UInputAction* SetInteractAction;
 
 	void ShowInteractionWidget(bool bShow);
+	void SetInteractionItem(APickableItem* InItem);
 
 protected:
 	virtual void SetupInputComponent() override;
@@ -30,6 +32,8 @@ protected:
 
 	/** Input handlers for SetDestination action. */
 	virtual void OnInteract();
+
+	APickableItem* ItemToInteract;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UPlayerUIManagerComponent* PlayerUIManagerComponent;
