@@ -18,7 +18,10 @@ public:
 	void Addkey();
 
 	UFUNCTION(BlueprintCallable, Category = "Keys")
-	int32 GetKeyCount() const;
+	int32 GetKeyCount() const {return KeysCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "Keys")
+	int32 GetMaxKeys() const { return MaxKeys; }
 
 	//Delegate to request ui updates
 	UPROPERTY(BlueprintAssignable, Category = "Events")

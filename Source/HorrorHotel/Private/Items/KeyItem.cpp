@@ -1,8 +1,7 @@
 // KeyItem.cpp
 #include "HorrorHotel/Public/Items/KeyItem.h"
-
 #include "GameCore/MultiplayerGameStateBase.h"
-#include "HorrorHotel/Public/Items/PickableItem.h"
+#include "Net/UnrealNetwork.h"
 
 
 AKeyItem::AKeyItem()
@@ -10,15 +9,10 @@ AKeyItem::AKeyItem()
 	ItemName = TEXT("Key");
 }
 
-void AKeyItem::OnPickedUp()
+void AKeyItem::OnInteraction()
 {
-	Super::OnPickedUp();
+	Super::OnInteraction();
 
-	Server_OnPickedUp();
-}
-
-void AKeyItem::Server_OnPickedUp_Implementation()
-{
 	IncrementKeysCount();
 	Destroy();
 }

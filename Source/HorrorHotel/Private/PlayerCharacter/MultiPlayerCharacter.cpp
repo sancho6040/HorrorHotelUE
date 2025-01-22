@@ -1,7 +1,7 @@
 #include "PlayerCharacter/MultiPlayerCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "Items/InteractableItem.h"
 #include "PlayerCharacter/MultiPlayerController.h"
-#include "Items/KeyItem.h"
 
 AMultiPlayerCharacter::AMultiPlayerCharacter()
 {
@@ -29,7 +29,7 @@ void AMultiPlayerCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, 
 {
 	if (OtherActor && OtherActor != this)
 	{
-		AKeyItem* KeyItem = Cast<AKeyItem>(OtherActor);
+		AInteractableItem* KeyItem = Cast<AInteractableItem>(OtherActor);
 		AMultiPlayerController* PlayerController = Cast<AMultiPlayerController>(GetController());
 		if (KeyItem && PlayerController)
 		{
@@ -44,7 +44,7 @@ void AMultiPlayerCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AA
 {
 	if (OtherActor && OtherActor != this)
 	{
-		if (OtherActor->IsA(AKeyItem::StaticClass()))
+		if (OtherActor->IsA(AInteractableItem::StaticClass()))
 		{
 			AMultiPlayerController* PlayerController = Cast<AMultiPlayerController>(GetController());
 			if (PlayerController)

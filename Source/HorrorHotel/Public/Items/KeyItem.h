@@ -2,23 +2,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PickableItem.h"
+#include "InteractableItem.h"
 #include "KeyItem.generated.h"
 
 UCLASS()
-class HORRORHOTEL_API AKeyItem : public APickableItem
+class HORRORHOTEL_API AKeyItem : public AInteractableItem
 {
 	GENERATED_BODY()
 
 public:
 	AKeyItem();
 
-	virtual void OnPickedUp() override;
+	virtual void OnInteraction() override;
 
 protected:
-	//Interact RPC
-	UFUNCTION(Server, Reliable)
-	void Server_OnPickedUp();
-
+	
 	void IncrementKeysCount();
 };

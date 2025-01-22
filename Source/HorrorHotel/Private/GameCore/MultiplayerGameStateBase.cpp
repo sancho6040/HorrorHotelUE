@@ -16,11 +16,6 @@ void AMultiplayerGameStateBase::Addkey()
 	}
 }
 
-int32 AMultiplayerGameStateBase::GetKeyCount() const
-{
-	return KeysCount;
-}
-
 void AMultiplayerGameStateBase::OnRep_KeyCount()
 {
 	OnKeyCountChanged.Broadcast();
