@@ -21,9 +21,6 @@ void AInteractableItem::Tick(float DeltaTime)
 // Logic for when the item is picked up
 void AInteractableItem::OnInteraction()
 {
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("door interaction"));
-
 	UE_LOG(LogTemp, Warning, TEXT("%s picked up"), *ItemName);
 }
 

@@ -12,7 +12,7 @@ class HORRORHOTEL_API AKeyItem : public AInteractableItem
 
 public:
 	AKeyItem();
-
+	
 	virtual void OnInteraction() override;
 
 protected:

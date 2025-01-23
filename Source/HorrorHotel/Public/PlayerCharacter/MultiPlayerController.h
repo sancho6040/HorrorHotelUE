@@ -25,6 +25,12 @@ public:
 
 	void ShowInteractionWidget(bool bShow);
 	void SetInteractionItem(AInteractableItem* InItem);
+	
+	UFUNCTION(BlueprintCallable)
+	void DropItem(int32 ItemIndex);
+
+	UFUNCTION(Server, Reliable)
+	void Server_DropItem(int32 ItemIndex, FVector InLocation);
 
 protected:
 	virtual void SetupInputComponent() override;
@@ -40,4 +46,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UPlayerUIManagerComponent* PlayerUIManagerComponent;
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class APickableItem> BP_PickableItemClass;
 };
