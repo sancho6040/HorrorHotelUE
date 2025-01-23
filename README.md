@@ -2,6 +2,10 @@
 
 Este proyecto es un juego de terror multijugador basado en el template de Top Down de Unreal Engine. A continuación, se describen brevemente las principales clases que conforman el proyecto.
 
+## Requisitos del Sistema
+
+- Unreal Engine 5.3.2
+
 ### Instrucciones
 
 - **Acceso al Juego**:
